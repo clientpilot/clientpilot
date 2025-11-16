@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Objednávka Webstránky</title>
+<title>Objednávka Webstránky - Wow Efekt</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -120,7 +120,7 @@
 
     <h1 id="title">Objednaj si vlastnú stránku</h1>
 
-    <form id="webForm" action="https://formsubmit.co/clientpilot0@gmail.com" method="POST">
+    <form id="webForm" action="https://formsubmit.co/clientpilot0@gmail.com" method="POST" target="_blank">
       <input type="hidden" name="_subject" value="Nová objednávka webstránky">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
@@ -162,58 +162,10 @@
 
 <script>
   const texts = {
-    sk: {
-      title:"Objednaj si vlastnú stránku",
-      name:"Meno:",
-      contact:"Email alebo telefón:",
-      type:"Typ stránky (čo chceš vytvoriť):",
-      typeOptions:["Landing Page","Predajná stránka","Link-in-bio stránka","Osobná mini stránka"],
-      desc:"Popis (čo chceš na stránke):",
-      descPlaceholder:"Napíš svoju predstavu...",
-      pay:"Stripe / PayPal link (POVINNÉ):",
-      note:"Záloha <strong>20€</strong> je povinná. Zvyšná cena sa doplatí <strong>po odovzdaní hotovej stránky.</strong>",
-      checkbox:"Súhlasím s podmienkami zálohy 20€ a doplatkom po dokončení.",
-      button:"KÚPIŤ / OBJEDNAŤ"
-    },
-    cs: {
-      title:"Objednej si vlastní stránku",
-      name:"Jméno:",
-      contact:"Email nebo telefon:",
-      type:"Typ stránky (co chceš vytvořit):",
-      typeOptions:["Landing Page","Prodejní stránka","Link-in-bio stránka","Osobní mini stránka"],
-      desc:"Popis (co chceš na stránce):",
-      descPlaceholder:"Napiš svůj nápad...",
-      pay:"Stripe / PayPal odkaz (POVINNÉ):",
-      note:"Záloha <strong>20€</strong> je povinná. Zbývající cena se doplatí po dokončení stránky.",
-      checkbox:"Souhlasím s podmínkami zálohy 20€ a doplatkem po dokončení.",
-      button:"KUPIT / OBJEDNAT"
-    },
-    en: {
-      title:"Order Your Own Website",
-      name:"Name:",
-      contact:"Email or phone:",
-      type:"Website type (what do you want to create):",
-      typeOptions:["Landing Page","Sales Page","Link-in-bio page","Personal mini page"],
-      desc:"Description (what do you want on the page):",
-      descPlaceholder:"Write your idea...",
-      pay:"Stripe / PayPal link (REQUIRED):",
-      note:"Deposit of <strong>20€</strong> is required. Remaining price is paid after website is delivered.",
-      checkbox:"I agree with the deposit terms of 20€ and final payment upon completion.",
-      button:"BUY / ORDER"
-    },
-    de: {
-      title:"Bestelle deine eigene Webseite",
-      name:"Name:",
-      contact:"E-Mail oder Telefon:",
-      type:"Seitentyp (was möchtest du erstellen):",
-      typeOptions:["Landing Page","Verkaufsseite","Link-in-bio Seite","Persönliche Mini-Seite"],
-      desc:"Beschreibung (was möchtest du auf der Seite haben):",
-      descPlaceholder:"Schreibe deine Idee...",
-      pay:"Stripe / PayPal Link (PFLICHT):",
-      note:"Anzahlung von <strong>20€</strong> ist erforderlich. Restbetrag wird nach Fertigstellung gezahlt.",
-      checkbox:"Ich stimme den Anzahlungbedingungen von 20€ und der Restzahlung nach Fertigstellung zu.",
-      button:"KAUFEN / BESTELLEN"
-    }
+    sk: { title:"Objednaj si vlastnú stránku", name:"Meno:", contact:"Email alebo telefón:", type:"Typ stránky (čo chceš vytvoriť):", typeOptions:["Landing Page","Predajná stránka","Link-in-bio stránka","Osobná mini stránka"], desc:"Popis (čo chceš na stránke):", descPlaceholder:"Napíš svoju predstavu...", pay:"Stripe / PayPal link (POVINNÉ):", note:"Záloha <strong>20€</strong> je povinná. Zvyšná cena sa doplatí <strong>po odovzdaní hotovej stránky.</strong>", checkbox:"Súhlasím s podmienkami zálohy 20€ a doplatkom po dokončení.", button:"KÚPIŤ / OBJEDNAŤ" },
+    cs: { title:"Objednej si vlastní stránku", name:"Jméno:", contact:"Email nebo telefon:", type:"Typ stránky (co chceš vytvořit):", typeOptions:["Landing Page","Prodejní stránka","Link-in-bio stránka","Osobní mini stránka"], desc:"Popis (co chceš na stránce):", descPlaceholder:"Napiš svůj nápad...", pay:"Stripe / PayPal odkaz (POVINNÉ):", note:"Záloha <strong>20€</strong> je povinná. Zbývající cena se doplatí po dokončení stránky.", checkbox:"Souhlasím s podmínkami zálohy 20€ a doplatkem po dokončení.", button:"KUPIT / OBJEDNAT" },
+    en: { title:"Order Your Own Website", name:"Name:", contact:"Email or phone:", type:"Website type (what do you want to create):", typeOptions:["Landing Page","Sales Page","Link-in-bio page","Personal mini page"], desc:"Description (what do you want on the page):", descPlaceholder:"Write your idea...", pay:"Stripe / PayPal link (REQUIRED):", note:"Deposit of <strong>20€</strong> is required. Remaining price is paid after website is delivered.", checkbox:"I agree with the deposit terms of 20€ and final payment upon completion.", button:"BUY / ORDER" },
+    de: { title:"Bestelle deine eigene Webseite", name:"Name:", contact:"E-Mail oder Telefon:", type:"Seitentyp (was möchtest du erstellen):", typeOptions:["Landing Page","Verkaufsseite","Link-in-bio Seite","Persönliche Mini-Seite"], desc:"Beschreibung (was möchtest du auf der Seite haben):", descPlaceholder:"Schreibe deine Idee...", pay:"Stripe / PayPal Link (PFLICHT):", note:"Anzahlung von <strong>20€</strong> ist erforderlich. Restbetrag wird nach Fertigstellung gezahlt.", checkbox:"Ich stimme den Anzahlungbedingungen von 20€ und der Restzahlung nach Fertigstellung zu.", button:"KAUFEN / BESTELLEN" }
   };
 
   const langSelect = document.getElementById("language");
@@ -249,14 +201,20 @@
   setLanguage(langSelect.value);
   langSelect.addEventListener("change", ()=>setLanguage(langSelect.value));
 
-  // Validácia platby pred odoslaním
   const form = document.getElementById('webForm');
+  const paypalLink = "https://www.paypal.me/ncncnfmcm/20"; // tvoja záloha 20€
+
   form.addEventListener('submit', function(e){
     const platba = form.querySelector('input[name="platba"]').value.toLowerCase();
     if(!platba.includes('paypal') && !platba.includes('stripe')){
       alert('Zadaj platobný link PayPal alebo Stripe!');
       e.preventDefault();
+      return;
     }
+    // Presmerovanie na PayPal po odoslaní formulára
+    setTimeout(() => {
+      window.location.href = paypalLink;
+    }, 100); // krátke oneskorenie, aby sa formulár stihol odoslať
   });
 </script>
 
