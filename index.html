@@ -126,10 +126,10 @@
       <input type="hidden" name="_captcha" value="false">
 
       <label id="label-name">Meno:</label>
-      <input type="text" name="meno" required>
+      <input type="text" name="meno" required pattern=".{2,}" title="Zadaj svoje meno">
 
-      <label id="label-contact">Email alebo telefón:</label>
-      <input type="text" name="kontakt" required>
+      <label id="label-contact">Email:</label>
+      <input type="email" name="kontakt" required placeholder="tvoj@email.com">
 
       <label id="label-type">Typ stránky (čo chceš vytvoriť):</label>
       <select name="typ" id="type" required>
@@ -143,7 +143,7 @@
       <textarea name="popis" rows="4" required placeholder="Napíš svoju predstavu..."></textarea>
 
       <label id="label-pay">Stripe / PayPal link (POVINNÉ):</label>
-      <input type="url" name="platba" required placeholder="https://...">
+      <input type="url" name="platba" required placeholder="https://..." pattern="https://.*" title="Zadaj platný URL link">
 
       <div class="note" id="note">
         Záloha <strong>20€</strong> je povinná.  
@@ -161,61 +161,68 @@
 </div>
 
 <script>
-  const texts = {
-    sk: { title:"Objednaj si vlastnú stránku", name:"Meno:", contact:"Email alebo telefón:", type:"Typ stránky (čo chceš vytvoriť):", typeOptions:["Landing Page","Predajná stránka","Link-in-bio stránka","Osobná mini stránka"], desc:"Popis (čo chceš na stránke):", descPlaceholder:"Napíš svoju predstavu...", pay:"Stripe / PayPal link (POVINNÉ):", note:"Záloha <strong>20€</strong> je povinná. Zvyšná cena sa doplatí <strong>po odovzdaní hotovej stránky.</strong>", checkbox:"Súhlasím s podmienkami zálohy 20€ a doplatkom po dokončení.", button:"KÚPIŤ / OBJEDNAŤ" },
-    cs: { title:"Objednej si vlastní stránku", name:"Jméno:", contact:"Email nebo telefon:", type:"Typ stránky (co chceš vytvořit):", typeOptions:["Landing Page","Prodejní stránka","Link-in-bio stránka","Osobní mini stránka"], desc:"Popis (co chceš na stránce):", descPlaceholder:"Napiš svůj nápad...", pay:"Stripe / PayPal odkaz (POVINNÉ):", note:"Záloha <strong>20€</strong> je povinná. Zbývající cena se doplatí po dokončení stránky.", checkbox:"Souhlasím s podmínkami zálohy 20€ a doplatkem po dokončení.", button:"KUPIT / OBJEDNAT" },
-    en: { title:"Order Your Own Website", name:"Name:", contact:"Email or phone:", type:"Website type (what do you want to create):", typeOptions:["Landing Page","Sales Page","Link-in-bio page","Personal mini page"], desc:"Description (what do you want on the page):", descPlaceholder:"Write your idea...", pay:"Stripe / PayPal link (REQUIRED):", note:"Deposit of <strong>20€</strong> is required. Remaining price is paid after website is delivered.", checkbox:"I agree with the deposit terms of 20€ and final payment upon completion.", button:"BUY / ORDER" },
-    de: { title:"Bestelle deine eigene Webseite", name:"Name:", contact:"E-Mail oder Telefon:", type:"Seitentyp (was möchtest du erstellen):", typeOptions:["Landing Page","Verkaufsseite","Link-in-bio Seite","Persönliche Mini-Seite"], desc:"Beschreibung (was möchtest du auf der Seite haben):", descPlaceholder:"Schreibe deine Idee...", pay:"Stripe / PayPal Link (PFLICHT):", note:"Anzahlung von <strong>20€</strong> ist erforderlich. Restbetrag wird nach Fertigstellung gezahlt.", checkbox:"Ich stimme den Anzahlungbedingungen von 20€ und der Restzahlung nach Fertigstellung zu.", button:"KAUFEN / BESTELLEN" }
-  };
+const texts = {
+  sk: { title:"Objednaj si vlastnú stránku", name:"Meno:", contact:"Email:", type:"Typ stránky (čo chceš vytvoriť):", typeOptions:["Landing Page","Predajná stránka","Link-in-bio stránka","Osobná mini stránka"], desc:"Popis (čo chceš na stránke):", descPlaceholder:"Napíš svoju predstavu...", pay:"Stripe / PayPal link (POVINNÉ):", note:"Záloha <strong>20€</strong> je povinná. Zvyšná cena sa doplatí <strong>po odovzdaní hotovej stránky.</strong>", checkbox:"Súhlasím s podmienkami zálohy 20€ a doplatkom po dokončení.", button:"KÚPIŤ / OBJEDNAŤ" },
+  cs: { title:"Objednej si vlastní stránku", name:"Jméno:", contact:"Email:", type:"Typ stránky (co chceš vytvořit):", typeOptions:["Landing Page","Prodejní stránka","Link-in-bio stránka","Osobní mini stránka"], desc:"Popis (co chceš na stránce):", descPlaceholder:"Napiš svůj nápad...", pay:"Stripe / PayPal odkaz (POVINNÉ):", note:"Záloha <strong>20€</strong> je povinná. Zbývající cena se doplatí po dokončení stránky.", checkbox:"Souhlasím s podmínkami zálohy 20€ a doplatkem po dokončení.", button:"KUPIT / OBJEDNAT" },
+  en: { title:"Order Your Own Website", name:"Name:", contact:"Email:", type:"Website type (what do you want to create):", typeOptions:["Landing Page","Sales Page","Link-in-bio page","Personal mini page"], desc:"Description (what do you want on the page):", descPlaceholder:"Write your idea...", pay:"Stripe / PayPal link (REQUIRED):", note:"Deposit of <strong>20€</strong> is required. Remaining price is paid after website is delivered.", checkbox:"I agree with the deposit terms of 20€ and final payment upon completion.", button:"BUY / ORDER" },
+  de: { title:"Bestelle deine eigene Webseite", name:"Name:", contact:"E-Mail:", type:"Seitentyp (was möchtest du erstellen):", typeOptions:["Landing Page","Verkaufsseite","Link-in-bio Seite","Persönliche Mini-Seite"], desc:"Beschreibung (was möchtest du auf der Seite haben):", descPlaceholder:"Schreibe deine Idee...", pay:"Stripe / PayPal Link (PFLICHT):", note:"Anzahlung von <strong>20€</strong> ist erforderlich. Restbetrag wird nach Fertigstellung gezahlt.", checkbox:"Ich stimme den Anzahlungbedingungen von 20€ und der Restzahlung nach Fertigstellung zu.", button:"KAUFEN / BESTELLEN" }
+};
 
-  const langSelect = document.getElementById("language");
-  const titleEl = document.getElementById("title");
-  const labelName = document.getElementById("label-name");
-  const labelContact = document.getElementById("label-contact");
-  const labelType = document.getElementById("label-type");
-  const typeSelect = document.getElementById("type");
-  const labelDesc = document.getElementById("label-desc");
-  const labelPay = document.getElementById("label-pay");
-  const note = document.getElementById("note");
-  const checkboxText = document.getElementById("checkbox-text");
-  const btn = document.getElementById("btn-submit");
+const langSelect = document.getElementById("language");
+const titleEl = document.getElementById("title");
+const labelName = document.getElementById("label-name");
+const labelContact = document.getElementById("label-contact");
+const labelType = document.getElementById("label-type");
+const typeSelect = document.getElementById("type");
+const labelDesc = document.getElementById("label-desc");
+const labelPay = document.getElementById("label-pay");
+const note = document.getElementById("note");
+const checkboxText = document.getElementById("checkbox-text");
+const btn = document.getElementById("btn-submit");
 
-  function setLanguage(lang){
-    titleEl.textContent = texts[lang].title;
-    labelName.textContent = texts[lang].name;
-    labelContact.textContent = texts[lang].contact;
-    labelType.textContent = texts[lang].type;
-    typeSelect.querySelectorAll("option").forEach((opt,i)=>{
-      opt.textContent = texts[lang].typeOptions[i];
-    });
-    labelDesc.textContent = texts[lang].desc;
-    document.querySelector('textarea[name="popis"]').placeholder = texts[lang].descPlaceholder;
-    labelPay.textContent = texts[lang].pay;
-    note.innerHTML = texts[lang].note;
-    checkboxText.textContent = texts[lang].checkbox;
-    btn.textContent = texts[lang].button;
+function setLanguage(lang){
+  titleEl.textContent = texts[lang].title;
+  labelName.textContent = texts[lang].name;
+  labelContact.textContent = texts[lang].contact;
+  labelType.textContent = texts[lang].type;
+  typeSelect.querySelectorAll("option").forEach((opt,i)=>{
+    opt.textContent = texts[lang].typeOptions[i];
+  });
+  labelDesc.textContent = texts[lang].desc;
+  document.querySelector('textarea[name="popis"]').placeholder = texts[lang].descPlaceholder;
+  labelPay.textContent = texts[lang].pay;
+  note.innerHTML = texts[lang].note;
+  checkboxText.textContent = texts[lang].checkbox;
+  btn.textContent = texts[lang].button;
+}
+
+const browserLang = navigator.language.slice(0,2);
+langSelect.value = texts[browserLang] ? browserLang : 'sk';
+setLanguage(langSelect.value);
+langSelect.addEventListener("change", ()=>setLanguage(langSelect.value));
+
+const form = document.getElementById('webForm');
+const paypalLink = "https://www.paypal.me/ncncnfmcm/20"; // tvoja záloha 20€
+
+form.addEventListener('submit', function(e){
+  const emailInput = form.querySelector('input[name="kontakt"]');
+  if(!emailInput.checkValidity()){
+    alert("Prosím, zadaj platný e-mail.");
+    e.preventDefault();
+    return;
   }
 
-  const browserLang = navigator.language.slice(0,2);
-  langSelect.value = texts[browserLang] ? browserLang : 'sk';
-  setLanguage(langSelect.value);
-  langSelect.addEventListener("change", ()=>setLanguage(langSelect.value));
+  const platba = form.querySelector('input[name="platba"]').value.toLowerCase();
+  if(!platba.includes('paypal') && !platba.includes('stripe')){
+    alert('Zadaj platobný link PayPal alebo Stripe!');
+    e.preventDefault();
+    return;
+  }
 
-  const form = document.getElementById('webForm');
-  const paypalLink = "https://www.paypal.me/ncncnfmcm/20"; // tvoja záloha 20€
-
-  form.addEventListener('submit', function(e){
-    const platba = form.querySelector('input[name="platba"]').value.toLowerCase();
-    if(!platba.includes('paypal') && !platba.includes('stripe')){
-      alert('Zadaj platobný link PayPal alebo Stripe!');
-      e.preventDefault();
-      return;
-    }
-    // Presmerovanie na PayPal po odoslaní formulára
-    setTimeout(() => {
-      window.location.href = paypalLink;
-    }, 100); // krátke oneskorenie, aby sa formulár stihol odoslať
-  });
+  setTimeout(() => {
+    window.location.href = paypalLink;
+  }, 100);
+});
 </script>
 
 </body>
